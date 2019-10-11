@@ -430,12 +430,13 @@ abstract class Import extends DataObject implements ImportInterface
             return $this->outputHelper->getApiConnectionError();
         }
 
+        $this->initStatus();
+
         $this->eventManager->dispatch('akeneo_connector_import_step_start', ['import' => $this]);
         $this->eventManager->dispatch(
             'akeneo_connector_import_step_start_'.strtolower($this->getCode()),
             ['import' => $this]
         );
-        $this->initStatus();
 
         try {
             $this->{$method}();
